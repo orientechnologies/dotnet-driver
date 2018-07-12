@@ -15,19 +15,23 @@ namespace OrientDB.Net.ConnectionProtocols.Binary.Core
     public class OrientDBBinaryConnection : IOrientDatabaseConnection, IDisposable
     {
         private readonly IOrientDBRecordSerializer<byte[]> _serializer;
+        private readonly DatabaseHandshake _databaseHandshake;
         private readonly DatabaseConnectionOptions _connectionOptions;
-        private OrientDBBinaryConnectionStream _connectionStream;
+        private OrientDBNetworkConnectionStream _connectionStream;
+        //private OpenServerResult _OpenServ;
         private OpenDatabaseResult _openResult; // might not be how I model this here in the end.
         private ICommandPayloadConstructorFactory _payloadFactory;
         private readonly ILogger _logger;
 
-        public OrientDBBinaryConnection(DatabaseConnectionOptions options, IOrientDBRecordSerializer<byte[]> serializer, ILogger logger)
+        public OrientDBBinaryConnection(DatabaseConnectionOptions options, 
+            IOrientDBRecordSerializer<byte[]> serializer, ILogger logger,
+            OrientDBNetworkConnectionStream connection)
         {
             _connectionOptions = options ?? throw new ArgumentNullException($"{nameof(options)} cannot be null.");
             _serializer = serializer ?? throw new ArgumentNullException($"{nameof(serializer)} cannot be null.");
             _logger = logger ?? throw new ArgumentNullException($"{nameof(logger)} cannot be null.");
             _payloadFactory = new CommandPayloadConstructorFactory(serializer, logger);
-
+            _connectionStream = connection;
             Open();          
         }
 
@@ -54,9 +58,10 @@ namespace OrientDB.Net.ConnectionProtocols.Binary.Core
             Open();
         }
 
+
         public void Open()
         {
-            _connectionStream = new OrientDBBinaryConnectionStream(_connectionOptions, _logger);
+            //_connectionStream = new OrientDBNetworkConnectionStream(_connectionOptions, _logger);
             foreach(var stream in _connectionStream.StreamPool)
             {
                 _openResult = _connectionStream.Send(new DatabaseOpenOperation(_connectionOptions, _connectionStream.ConnectionMetaData));

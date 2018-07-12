@@ -24,6 +24,7 @@ namespace OrientDB.Net.Serializers.RecordCSVSerializer
             }
         }
 
+
         public OrientDBRecordCSVSerializer()
         {
 

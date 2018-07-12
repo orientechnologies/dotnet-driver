@@ -15,6 +15,7 @@ namespace Operations
         private readonly ConnectionMetaData _metaData;
         private readonly ServerConnectionOptions _options;
         private readonly StorageType _storageType;
+        private readonly byte[] token;
 
         public DatabaseExistsOperation(string database, StorageType storageType, ConnectionMetaData metaData, ServerConnectionOptions options)
         {
@@ -31,29 +32,44 @@ namespace Operations
             request.AddDataItem((byte)OperationType.DB_EXIST);
             request.AddDataItem(request.SessionId);
 
-            if (DriverConstants.ProtocolVersion > 26 && _metaData.UseTokenBasedSession)
+            request.AddDataItem((byte[])token);
+
+
+            if (DriverConstants.ProtocolVersion > 36)
             {
-                request.AddDataItem(token);
+                request.AddDataItem(_database);
+                request.AddDataItem(_storageType.ToString().ToLower());
+
             }
 
-            request.AddDataItem(_database);
-            if (_metaData.ProtocolVersion >= 16) //since 1.5 snapshot but not in 1.5
-                request.AddDataItem(_storageType.ToString().ToLower());
+            //if (DriverConstants.ProtocolVersion > 26 && _metaData.UseTokenBasedSession)
+            //{
+
+            //}
+
+
+            //if (_metaData.ProtocolVersion >= 16) //since 1.5 snapshot but not in 1.5
+            //    request.AddDataItem(_storageType.ToString().ToLower());
 
             return request;
         }
 
         internal byte[] ReadToken(BinaryReader reader)
         {
+            byte[] localToken = null;
             var size = reader.ReadInt32EndianAware();
-            var token = reader.ReadBytesRequired(size);
+            if (size > -1)
+            {
+                localToken = reader.ReadBytesRequired(size);
+            };
+
 
             // Will need to set this.
             // if token renewed
-           // if (token.Length > 0)
+            // if (token.Length > 0)
             //    _database.GetConnection().Token = token;
 
-            return token;
+            return localToken;
         }
 
         public DatabaseExistsResult Execute(BinaryReader reader)
@@ -62,6 +78,8 @@ namespace Operations
                 ReadToken(reader);
 
             // operation specific fields
+            byte requestId = reader.ReadByte();
+            //TODO do control check above
             byte existByte = reader.ReadByte();
 
             if (existByte == 0)

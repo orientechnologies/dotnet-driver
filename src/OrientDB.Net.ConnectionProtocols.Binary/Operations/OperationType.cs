@@ -15,7 +15,7 @@
         DATACLUSTER_DROP = 11,
         DATACLUSTER_COUNT = 12,
         DATACLUSTER_DATARANGE = 13,
-        DATASEGMENT_ADD = 20,
+        HANDSHAKE = 20,
         DATASEGMENT_REMOVE = 21,
         RECORD_METADATA = 29,
         RECORD_LOAD = 30,
@@ -35,5 +35,6 @@
         SBTREE_BONSAI_FIRST_KEY = 112,
         SBTREE_BONSAI_GET_ENTRIES_MAJOR = 113,
         RIDBAG_GET_SIZE = 114
+        
     }
 }

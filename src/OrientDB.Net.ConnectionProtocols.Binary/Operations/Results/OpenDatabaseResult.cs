@@ -13,14 +13,14 @@ namespace OrientDB.Net.ConnectionProtocols.Binary.Operations.Results
         public byte[] ClusterConfig { get; }
         public string OrientRelease { get; }
 
-        public OpenDatabaseResult(int sessionId, byte[] token, int clusterCount, IEnumerable<Cluster> clusters, byte[] clusterConfig, string release)
+        public OpenDatabaseResult(int sessionId, byte[] token)
         {
             SessionId = sessionId;
             Token = token;
-            ClusterCount = clusterCount;
-            Clusters = clusters.ToList();
-            ClusterConfig = clusterConfig;
-            OrientRelease = release;
+            //ClusterCount = clusterCount;
+            //Clusters = clusters.ToList();
+            //ClusterConfig = clusterConfig;
+            //OrientRelease = release;
         }
     }
 }

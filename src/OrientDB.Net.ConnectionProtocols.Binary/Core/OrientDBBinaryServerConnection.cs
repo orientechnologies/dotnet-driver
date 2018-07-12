@@ -5,6 +5,7 @@ using OrientDB.Net.Core.Abstractions;
 using System.Collections.Generic;
 using OrientDB.Net.Core.Models;
 using Microsoft.Extensions.Logging;
+using OrientDB.Net.ConnectionProtocols.Binary.Operations.Results;
 
 namespace OrientDB.Net.ConnectionProtocols.Binary.Core
 {
@@ -12,8 +13,11 @@ namespace OrientDB.Net.ConnectionProtocols.Binary.Core
     {
         private readonly ServerConnectionOptions _options;
         private readonly IOrientDBRecordSerializer<byte[]> _serializer;
-        private OrientDBBinaryConnectionStream _connectionStream;
+        private OrientDBNetworkConnectionStream _connectionStream;
+        private bool _databaseHanshakeResult;
         private readonly ILogger _logger;
+        private readonly DatabaseHandshakeResult databaseHandshakeResult;
+
 
         public OrientDBBinaryServerConnection(ServerConnectionOptions options, IOrientDBRecordSerializer<byte[]> serializer, ILogger logger)
         {
@@ -26,17 +30,60 @@ namespace OrientDB.Net.ConnectionProtocols.Binary.Core
             Open();
         }
 
-        public void Open()
+
+
+        public void Handshake()
         {
-            _connectionStream = new OrientDBBinaryConnectionStream(_options, _logger);
+
+          
+            
+            if (_databaseHanshakeResult == false )
+            {
+
+                
+                _logger.LogDebug("Opening connections");
+                foreach (var stream in _connectionStream.StreamPool)
+                {
+                    _connectionStream.Send(new DatabaseHandshake(_options, _connectionStream.ConnectionMetaData));
+                    
+                    //var _openResult = _connectionStream.Send(new ServerOpenOperation(_options, _connectionStream.ConnectionMetaData));
+                    //stream.SessionId = _openResult.SessionId;
+                    //stream.Token = _openResult.Token;
+                }
+                _databaseHanshakeResult = true;
+            }
+
+            Open();
+
+            }
+
+            public void Open()
+        {
+            if(_databaseHanshakeResult == false)
+            {
+                _connectionStream = new OrientDBNetworkConnectionStream(_options, _logger);
+                _logger.LogDebug("Opening connections");
+                foreach (var stream in _connectionStream.StreamPool)
+                {
+                    var _openResult = _connectionStream.Send(new DatabaseHandshake(_options, _connectionStream.ConnectionMetaData));
+                   
+                }
+
+            }
+
             _logger.LogDebug("Opening connections");
-            foreach(var stream in _connectionStream.StreamPool)
+            foreach (var stream in _connectionStream.StreamPool)
             {
                 var _openResult = _connectionStream.Send(new ServerOpenOperation(_options, _connectionStream.ConnectionMetaData));
                 stream.SessionId = _openResult.SessionId;
                 stream.Token = _openResult.Token;
             }
-        }     
+
+
+            //_connectionStream = new OrientDBBinaryConnectionStream(_options, _logger);
+
+
+        }
 
         public void Dispose()
         {
@@ -49,10 +96,11 @@ namespace OrientDB.Net.ConnectionProtocols.Binary.Core
                 throw new ArgumentException($"{nameof(database)} cannot be null or zero length.");
 
             _logger.LogDebug($"Creating database {database}. DatabaseType: {databaseType}. StorageType: {storageType}.");
-            return _connectionStream.Send(new DatabaseCreateOperation(database, databaseType, storageType, _connectionStream.ConnectionMetaData, _options, _serializer, _logger));
+            return _connectionStream.Send(new DatabaseCreateOperation(database, databaseType, storageType, 
+                _connectionStream.ConnectionMetaData, _options, _serializer, _logger, _connectionStream));
         }
 
-        public IOrientDatabaseConnection DatabaseConnect(string database, DatabaseType type, int poolSize = 10)
+        public IOrientDatabaseConnection DatabaseConnect(string database, DatabaseType type, int poolSize = 1)
         {
             if (string.IsNullOrWhiteSpace(database))
                 throw new ArgumentException($"{nameof(database)} cannot be null or zero length.");
@@ -67,7 +115,8 @@ namespace OrientDB.Net.ConnectionProtocols.Binary.Core
                 Port = _options.Port,
                 Type = type,
                 UserName = _options.UserName
-            }, _serializer, _logger);
+            }, _serializer, _logger, _connectionStream);
+
         }
 
         public void DeleteDatabase(string database, StorageType storageType)

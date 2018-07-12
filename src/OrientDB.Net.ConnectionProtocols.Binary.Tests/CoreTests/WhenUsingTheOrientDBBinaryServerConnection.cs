@@ -84,7 +84,7 @@ namespace OrientDB.Net.ConnectionProtocols.Binary.Tests.CoreTests
             var obj = mockConnection.Object;
             mockConnection.Setup(conn => conn.Open()).Callback(() =>
             {
-                Mock<OrientDBBinaryConnectionStream> mockStream = new Mock<OrientDBBinaryConnectionStream>();
+                Mock<OrientDBNetworkConnectionStream> mockStream = new Mock<OrientDBNetworkConnectionStream>();
                 //mockStream.Setup(stream => stream.Se)
 
                 var objStr = mockStream.Object;

@@ -12,7 +12,7 @@ using System.Threading;
 
 namespace OrientDB.Net.ConnectionProtocols.Binary.Core
 {
-    public class OrientDBBinaryConnectionStream
+    public class OrientDBNetworkConnectionStream
     {
         private readonly ILogger _logger;
 
@@ -24,7 +24,7 @@ namespace OrientDB.Net.ConnectionProtocols.Binary.Core
 
         internal ConcurrentQueue<OrientDBNetworkConnection> StreamPool { get { return _streamPool; } }
 
-        public OrientDBBinaryConnectionStream(ServerConnectionOptions options, ILogger logger)
+        public OrientDBNetworkConnectionStream(ServerConnectionOptions options, ILogger logger)
         {
             _connectionOptions = options;
             _logger = logger;
@@ -39,6 +39,8 @@ namespace OrientDB.Net.ConnectionProtocols.Binary.Core
             flowControl = new Semaphore(options.PoolSize, options.PoolSize);
         }
 
+
+
         private OrientDBNetworkConnection CreateNetworkStream()
         {
             var readBuffer = new byte[1024];
@@ -46,7 +48,6 @@ namespace OrientDB.Net.ConnectionProtocols.Binary.Core
             var socket = new TcpClient();
             socket.ReceiveTimeout = (30 * 1000);
             socket.ConnectAsync(_connectionOptions.HostName, _connectionOptions.Port).GetAwaiter().GetResult();
-
             var networkStream = socket.GetStream();
             networkStream.Read(readBuffer, 0, 2);
 
@@ -54,6 +55,9 @@ namespace OrientDB.Net.ConnectionProtocols.Binary.Core
             ConnectionMetaData.ProtocolVersion = BinarySerializer.ToShort(readBuffer.Take(2).ToArray());
             if (ConnectionMetaData.ProtocolVersion < 27)
                 ConnectionMetaData.UseTokenBasedSession = false;
+            if (ConnectionMetaData.ProtocolVersion > 36)
+                ConnectionMetaData.UseTokenBasedSession = true;
+            
 
             return new OrientDBNetworkConnection(socket, networkStream);
         }
@@ -68,7 +72,10 @@ namespace OrientDB.Net.ConnectionProtocols.Binary.Core
 
         private BinaryReader GetResponseReader(NetworkStream stream)
         {
+            
             var reader = new BinaryReader(stream);
+
+            //var sta = reader.ReadBytes(5);
             var status = (ResponseStatus)reader.ReadByte();
             var sessionId = reader.ReadInt32EndianAware();
 

@@ -6,7 +6,8 @@ namespace OrientDB.Net.Core.Abstractions
     public interface IOrientServerConnection
     {
         IOrientDatabaseConnection CreateDatabase(string database, DatabaseType databaseType, StorageType type);
-        IOrientDatabaseConnection DatabaseConnect(string database, DatabaseType storageType, int poolSize = 10);
+        IOrientDatabaseConnection DatabaseConnect(string database, DatabaseType storageType, int poolSize = 1);
+        //IOrientDatabaseConnection Handshake(string database);
         void DeleteDatabase(string database, StorageType storageType);
         bool DatabaseExists(string database, StorageType storageType);
         void Shutdown(string username, string password);

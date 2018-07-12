@@ -12,9 +12,9 @@ namespace OrientDB.Net.ConnectionProtocols.Binary.Constants
 
         static DriverConstants()
         {
-            ProtocolVersion = 36;
+            ProtocolVersion = 37;
             DriverName = "OrientDB-NET.binary";
-            DriverVersion = "0.2.2";
+            DriverVersion = "0.3.0";
             ClientID = "null";
             RecordFormat = RecordFormat.ORecordDocument2csv;
         }

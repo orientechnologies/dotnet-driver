@@ -17,8 +17,12 @@ namespace OrientDB.Net.ConnectionProtocols.Binary.Operations
         private readonly IOrientDBRecordSerializer<byte[]> _serializer;
         private readonly ServerConnectionOptions _options;
         private readonly ILogger _logger;
+        private readonly OrientDBNetworkConnectionStream _connectionStream;
 
-        public DatabaseCreateOperation(string databaseName, DatabaseType databaseType, StorageType storageType, ConnectionMetaData metaData, ServerConnectionOptions options, IOrientDBRecordSerializer<byte[]> serializer, ILogger logger)
+        public DatabaseCreateOperation(string databaseName, DatabaseType databaseType, 
+            StorageType storageType, ConnectionMetaData metaData, 
+            ServerConnectionOptions options, IOrientDBRecordSerializer<byte[]> serializer, 
+            ILogger logger, OrientDBNetworkConnectionStream stream)
         {
             if (string.IsNullOrWhiteSpace(databaseName))
                 throw new ArgumentException($"{nameof(databaseName)} cannot be zero length or null.");
@@ -29,7 +33,8 @@ namespace OrientDB.Net.ConnectionProtocols.Binary.Operations
 
             _databaseName = databaseName;
             _databaseType = databaseType;
-            _storageType = storageType;           
+            _storageType = storageType;
+            _connectionStream = stream;
         }
 
         public Request CreateRequest(int sessionId, byte[] token)
@@ -60,9 +65,9 @@ namespace OrientDB.Net.ConnectionProtocols.Binary.Operations
                 Password = _options.Password,
                 PoolSize = _options.PoolSize,
                 Port = _options.Port,
-                Type = _databaseType,
+                //Type = _databaseType,
                 UserName = _options.UserName
-            }, _serializer, _logger);
+            }, _serializer, _logger, _connectionStream);
         }
     }
 }

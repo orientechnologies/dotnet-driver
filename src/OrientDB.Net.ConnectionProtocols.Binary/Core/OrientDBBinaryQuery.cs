@@ -12,12 +12,12 @@ namespace OrientDB.Net.ConnectionProtocols.Binary.Core
 {
     public class OrientDBCommand : IOrientDBCommand
     {
-        private readonly OrientDBBinaryConnectionStream _stream;
+        private readonly OrientDBNetworkConnectionStream _stream;
         private readonly IOrientDBRecordSerializer<byte[]> _serializer;
         private readonly ICommandPayloadConstructorFactory _payloadFactory;
         private readonly ILogger _logger;
 
-        internal OrientDBCommand(OrientDBBinaryConnectionStream stream, IOrientDBRecordSerializer<byte[]> serializer, ICommandPayloadConstructorFactory payloadFactory, ILogger logger)
+        internal OrientDBCommand(OrientDBNetworkConnectionStream stream, IOrientDBRecordSerializer<byte[]> serializer, ICommandPayloadConstructorFactory payloadFactory, ILogger logger)
         {
             _stream = stream ?? throw new ArgumentNullException($"{nameof(stream)} cannot be null.");
             _serializer = serializer ?? throw new ArgumentNullException($"{nameof(serializer)} cannot be null");

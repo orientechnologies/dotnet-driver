@@ -12,13 +12,13 @@ namespace OrientDB.Net.ConnectionProtocols.Binary.Command
 {
     public class BinaryOrientDBTransaction : IOrientDBTransaction
     {
-        private readonly OrientDBBinaryConnectionStream _stream;
+        private readonly OrientDBNetworkConnectionStream _stream;
         private readonly Dictionary<ORID, DatabaseTransactionRequest> _records = new Dictionary<ORID, DatabaseTransactionRequest>();
         private readonly IOrientDBRecordSerializer<byte[]> _serializer;
         private readonly ConnectionMetaData _metaData;
         private readonly Func<string, short> _clusterIdResolver;
 
-        public BinaryOrientDBTransaction(OrientDBBinaryConnectionStream stream, IOrientDBRecordSerializer<byte[]> serializer, 
+        public BinaryOrientDBTransaction(OrientDBNetworkConnectionStream stream, IOrientDBRecordSerializer<byte[]> serializer, 
             ConnectionMetaData metaData, Func<string, short> clusterIdResolver)
         {
             _stream = stream;
