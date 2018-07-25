@@ -61,11 +61,16 @@ namespace OrientDB.Net.ConnectionProtocols.Binary.Operations
 
         public DocumentResult Execute(BinaryReader reader)
         {
+            //var readby = reader.ReadBytes(5);
+            //var sessionID = reader.ReadInt32EndianAware();
+            
             if (reader == null)
                 throw new ArgumentNullException($"{nameof(reader)} cannot be null.");
 
             if (_connectionMetaData.ProtocolVersion > 26 && _connectionMetaData.UseTokenBasedSession)
                 ReadToken(reader);
+            var reqnum = reader.ReadByte();
+            //var rk = reader.ReadBytes(33);
 
             PayloadStatus payloadStatus = (PayloadStatus)reader.ReadByte();
 
@@ -120,6 +125,7 @@ namespace OrientDB.Net.ConnectionProtocols.Binary.Operations
                     }
                 }
             }
+            //var kss = reader.ReadBytes(1);
 
             return new DocumentResult(documents);
         }

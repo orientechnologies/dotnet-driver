@@ -81,9 +81,29 @@ namespace OrientDB.Net.ConnectionProtocols.Binary.Core
 
             if (status == ResponseStatus.ERROR)
             {
+                var size = reader.ReadInt32EndianAware();
+                var fg = reader.ReadBytes(size);
+
+                var requestName = reader.ReadByte();
+                var var3 = reader.ReadInt32EndianAware();
+                var var4 = reader.ReadInt32EndianAware();
+                var var6 = reader.ReadByte();
+
+                size = reader.ReadInt32EndianAware();
+                var jer = reader.ReadChars(size);
+
+                size = reader.ReadInt32EndianAware();
+                var except = reader.ReadChars(size);
+
+               // var read = reader.ReadByte();
+
+
                 string exceptionString = "";
 
                 byte followByte = reader.ReadByte();
+
+                size = reader.ReadInt32EndianAware();
+                var except2 = reader.ReadChars(size);
 
                 while (followByte == 1)
                 {
@@ -204,9 +224,10 @@ namespace OrientDB.Net.ConnectionProtocols.Binary.Core
 
                 return result;
             }
-            catch
+            catch (Exception ex)
             {
-                Destroy(stream);
+                Console.WriteLine(ex.StackTrace);
+                Destroy(stream);                
                 throw;
             }
         }

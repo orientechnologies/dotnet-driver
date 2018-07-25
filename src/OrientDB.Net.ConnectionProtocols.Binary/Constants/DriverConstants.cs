@@ -16,7 +16,7 @@ namespace OrientDB.Net.ConnectionProtocols.Binary.Constants
             DriverName = "OrientDB-NET.binary";
             DriverVersion = "0.3.0";
             ClientID = "null";
-            RecordFormat = RecordFormat.ORecordDocument2csv;
+            RecordFormat = RecordFormat.ORecordSerializerBinary;
         }
     }
 }

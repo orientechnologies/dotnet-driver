@@ -7,6 +7,7 @@ namespace OrientDB.Net.Core.Models
         static readonly char[] colon = new char[] { ':' };
         public short ClusterId { get; set; }
         public long ClusterPosition { get; set; }
+        public string ClassName { get; set; }
         public string RID
         {
             get
@@ -50,8 +51,8 @@ namespace OrientDB.Net.Core.Models
 
         public ORID()
         {
-            ClusterId = -1;
-            ClusterPosition = -1;
+            ClusterId = -20;
+            ClusterPosition = -20;
         }
 
         public ORID(ORID other)

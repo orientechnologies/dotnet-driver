@@ -30,45 +30,33 @@ namespace OrientDB.Net.ConnectionProtocols.Binary.Core
             Open();
         }
 
-
-
         public void Handshake()
         {
-
-          
-            
-            if (_databaseHanshakeResult == false )
+            if (_databaseHanshakeResult == false)
             {
-
-                
                 _logger.LogDebug("Opening connections");
                 foreach (var stream in _connectionStream.StreamPool)
                 {
                     _connectionStream.Send(new DatabaseHandshake(_options, _connectionStream.ConnectionMetaData));
-                    
-                    //var _openResult = _connectionStream.Send(new ServerOpenOperation(_options, _connectionStream.ConnectionMetaData));
-                    //stream.SessionId = _openResult.SessionId;
-                    //stream.Token = _openResult.Token;
                 }
                 _databaseHanshakeResult = true;
             }
 
             Open();
 
-            }
+        }
 
-            public void Open()
+        public void Open()
         {
-            if(_databaseHanshakeResult == false)
+            if (_databaseHanshakeResult == false)
             {
                 _connectionStream = new OrientDBNetworkConnectionStream(_options, _logger);
                 _logger.LogDebug("Opening connections");
                 foreach (var stream in _connectionStream.StreamPool)
                 {
                     var _openResult = _connectionStream.Send(new DatabaseHandshake(_options, _connectionStream.ConnectionMetaData));
-                   
-                }
 
+                }
             }
 
             _logger.LogDebug("Opening connections");
@@ -78,10 +66,6 @@ namespace OrientDB.Net.ConnectionProtocols.Binary.Core
                 stream.SessionId = _openResult.SessionId;
                 stream.Token = _openResult.Token;
             }
-
-
-            //_connectionStream = new OrientDBBinaryConnectionStream(_options, _logger);
-
 
         }
 
@@ -96,7 +80,7 @@ namespace OrientDB.Net.ConnectionProtocols.Binary.Core
                 throw new ArgumentException($"{nameof(database)} cannot be null or zero length.");
 
             _logger.LogDebug($"Creating database {database}. DatabaseType: {databaseType}. StorageType: {storageType}.");
-            return _connectionStream.Send(new DatabaseCreateOperation(database, databaseType, storageType, 
+            return _connectionStream.Send(new DatabaseCreateOperation(database, databaseType, storageType,
                 _connectionStream.ConnectionMetaData, _options, _serializer, _logger, _connectionStream));
         }
 
@@ -138,9 +122,9 @@ namespace OrientDB.Net.ConnectionProtocols.Binary.Core
 
         public void Shutdown(string username, string password)
         {
-            if(string.IsNullOrWhiteSpace(username))
+            if (string.IsNullOrWhiteSpace(username))
                 throw new ArgumentException($"{nameof(username)} cannot be null.");
-            if(string.IsNullOrWhiteSpace(password))
+            if (string.IsNullOrWhiteSpace(password))
                 throw new ArgumentException($"{nameof(password)} cannot be null.");
 
             _connectionStream.Send(new ServerShutdownOperation(_connectionStream.ConnectionMetaData, username, password));

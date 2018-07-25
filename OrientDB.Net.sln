@@ -13,7 +13,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrientDB.Net.Serializers.Re
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrientDB.Net.SqlCommandBuilder", "src\OrientDB.Net.SqlCommandBuilder\OrientDB.Net.SqlCommandBuilder.csproj", "{EFEDCA4B-1678-4CF8-A03D-4E56B617D3F4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApp1", "ConsoleApp1\ConsoleApp1.csproj", "{620E4C15-2CB5-4CDF-81CC-01D52EA2E1DE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleApp1", "ConsoleApp1\ConsoleApp1.csproj", "{620E4C15-2CB5-4CDF-81CC-01D52EA2E1DE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrientDB.Net.Serializers.NetworkBinary", "OrientDB.Net.NetworkBinarySerializaer\OrientDB.Net.Serializers.NetworkBinary.csproj", "{D70A4E0C-8CD8-4638-A15E-1FBA6838138C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrientDB.Net.xUnit.Test", "OrientDB.Net.xUnit.Test\OrientDB.Net.xUnit.Test.csproj", "{B5D077A5-C5E8-4FCB-B2AB-A65B493D18B7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +49,14 @@ Global
 		{620E4C15-2CB5-4CDF-81CC-01D52EA2E1DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{620E4C15-2CB5-4CDF-81CC-01D52EA2E1DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{620E4C15-2CB5-4CDF-81CC-01D52EA2E1DE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D70A4E0C-8CD8-4638-A15E-1FBA6838138C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D70A4E0C-8CD8-4638-A15E-1FBA6838138C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D70A4E0C-8CD8-4638-A15E-1FBA6838138C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D70A4E0C-8CD8-4638-A15E-1FBA6838138C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B5D077A5-C5E8-4FCB-B2AB-A65B493D18B7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B5D077A5-C5E8-4FCB-B2AB-A65B493D18B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B5D077A5-C5E8-4FCB-B2AB-A65B493D18B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B5D077A5-C5E8-4FCB-B2AB-A65B493D18B7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

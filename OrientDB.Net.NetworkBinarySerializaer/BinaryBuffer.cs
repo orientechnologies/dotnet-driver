@@ -1,14 +1,16 @@
 ﻿using OrientDB.Net.Core.Models;
-using OrientDB.Net.Serializers.RecordCSVSerializer;
-using OrientDB.Net.Serializers.RecordCSVSerializer.Extensions;
+using OrientDB.Net.Serializers.NetworkBinary.Extensions;
 using System;
 using System.Collections.Generic;
 
-namespace OrientDB.Net.Serializers.RecordCSVSerializer
+namespace OrientDB.Net.Serializers.NetworkBinary
 {
     internal class BinaryBuffer : List<Byte>
     {
         public int Length { get { return Count; } }
+
+        public byte[] bytes;
+        public int offset;
 
         internal int Allocate(int allocationSize)
         {
@@ -25,6 +27,21 @@ namespace OrientDB.Net.Serializers.RecordCSVSerializer
                 this[offset + i] = rawValue[i];
             }
         }
+
+       
+
+        //internal String stringFromBytes(byte[] data, int offset, int len)
+        //{
+        //    try
+        //    {
+        //        return new String(data, offset, len);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw ex;
+        //    }
+        //}
+
 
         internal void Write(int offset, byte value)
         {
@@ -47,6 +64,42 @@ namespace OrientDB.Net.Serializers.RecordCSVSerializer
                 value >>= 7;
             }
             Add((byte)(value & 0x7F));
+        }
+
+        private int readAsInteger(int offset, byte[] value)
+        {
+            return (int)readSignedVarLong(offset,value);
+        }
+
+        private  long readSignedVarLong(int offset, byte[] value)
+        {
+            long raw = readUnsignedVarLong(offset, value);
+            // This undoes the trick in writeSignedVarLong()
+            long temp = (((raw << 63) >> 63) ^ raw) >> 1;
+            // This extra step lets us deal with the largest signed values by
+            // treating
+            // negative results from read unsigned methods as like unsigned values
+            // Must re-flip the top bit if the original read value had it set.
+            return temp ^ (raw & (1L << 63));
+        }
+
+        private long readUnsignedVarLong(int offset, byte[] value)
+        {
+            long returnValue = 0L;
+            //this[offset] = value;
+            int i = 0;
+            long b;
+            while ((b = value[offset++] & 0x80L) != 0)
+            {
+                returnValue |= (b & 0x7F) << i;
+                i += 7;
+                if (i > 63)
+                {
+                    //thr
+                }
+                    //throw new IllegalArgumentException("Variable length quantity is too long (must be <= 63)");
+            }
+            return returnValue | (b << i);
         }
 
         private uint signedToUnsigned(int value)

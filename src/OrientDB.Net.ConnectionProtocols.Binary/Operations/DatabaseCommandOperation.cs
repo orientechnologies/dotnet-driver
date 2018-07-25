@@ -62,6 +62,8 @@ namespace OrientDB.Net.ConnectionProtocols.Binary.Operations
             if (_metaData.ProtocolVersion > 26 && _metaData.UseTokenBasedSession)
                 ReadToken(reader);
 
+            var reqNumber = reader.ReadByte();
+
             PayloadStatus payloadStatus = (PayloadStatus)reader.ReadByte();
 
             List<T> documents = new List<T>();

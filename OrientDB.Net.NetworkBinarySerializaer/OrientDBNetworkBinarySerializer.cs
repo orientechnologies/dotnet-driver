@@ -3,38 +3,92 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Reflection;
-using OrientDB.Net.Serializers.RecordCSVSerializer.Extensions;
+using OrientDB.Net.Serializers.NetworkBinary.Extensions;
 using System.Collections;
 using System.Globalization;
-using OrientDB.Net.Serializers.RecordCSVSerializer.Models;
+using OrientDB.Net.Serializers.NetworkBinary.Models;
 using System.IO;
 using OrientDB.Net.Core.Abstractions;
 using OrientDB.Net.Core;
 using OrientDB.Net.Core.Models;
+using OrientDB.Net.Serializers.NetworkBinary;
 
-namespace OrientDB.Net.Serializers.RecordCSVSerializer
+namespace OrientDB.Net.Serializers.NetworkBinary
 {
-    public class OrientDBRecordCSVSerializer
+    public class OrientDBNetworkBinarySerializer : IOrientDBRecordSerializer<byte[]>
     {
+        //private static Encoding UTF8 { get; }
+
         public OrientDBRecordFormat RecordFormat
         {
             get
             {
-                return OrientDBRecordFormat.CSV;
+                return OrientDBRecordFormat.Binary;
             }
         }
 
-
-        public OrientDBRecordCSVSerializer()
+        public OrientDBNetworkBinarySerializer()
         {
 
         }
 
+        //OVarIntSerializer VarInt = new OVarIntSerializer(); 
+
         public TResultType Deserialize<TResultType>(byte[] data) where TResultType : OrientDBEntity
         {
-            var recordString = BinarySerializer.ToString(data).Trim();
+            TResultType entity = Activator.CreateInstance<TResultType>();
 
-            return Deserialize<TResultType>(recordString);
+            var stream = new MemoryStream(data);
+            var reader = new BinaryReader(stream);
+            
+            //BytesContainer bytesContainer = new BytesContainer();
+            //bytesContainer.bytes = data;
+            //bytesContainer.offset = 0;
+
+            int index = data.Length;
+            string recordString = "";
+            //var FieldNumber;
+            //byte[] FieldType;
+            
+            
+            entity.OClassName = BinaryReaderHelper.ReadString(reader);
+            var FieldNumber = BinaryReaderHelper.ReadSignedVarLong(reader);
+            var FieldName = BinaryReaderHelper.ReadString(reader);
+            //var Otype = BinaryReaderHelper.ReadString(reader);
+            var FieldType = reader.ReadByte();
+            var FieldValue = BinaryReaderHelper.ReadAsInteger(reader);
+        
+
+            //FieldType = BinaryReaderHelper.ReadBytesRequired(reader);
+
+            
+           
+            
+
+            //string ClasName = reader.();
+
+           // var fieldNumber = ReadClassName(data, Index);
+
+            return Deserialize<TResultType>(FieldName);
+
+
+
+
+            //byte[] ClassName;
+            //byte[] fieldNumber;
+
+            //for (int i = 0; i < 4; i++)
+            //{
+
+            //}
+
+            //return ;
+            //read class name : string
+            //read fieldNumber varint
+            //read field
+            //       -read field name : string 
+            //       -read field type : byte
+            //       -read field value : *
         }
 
         internal TResultType Deserialize<TResultType>(string recordString) where TResultType : OrientDBEntity
@@ -46,6 +100,8 @@ namespace OrientDB.Net.Serializers.RecordCSVSerializer
             int index = 0;
 
             // parse class name
+            //var byr = recordString.Remove(3);
+
             if ((atIndex != -1) && (atIndex < colonIndex))
             {
                 entity.OClassName = recordString.Substring(0, atIndex);
@@ -56,7 +112,7 @@ namespace OrientDB.Net.Serializers.RecordCSVSerializer
             IDictionary<string, object> waterBucket = new Dictionary<string, object>();
 
             do
-            {               
+            {
                 index = ParseFieldName(index, recordString, waterBucket);
             } while (index < recordString.Length);
 
@@ -68,6 +124,94 @@ namespace OrientDB.Net.Serializers.RecordCSVSerializer
 
             return entity;
         }
+
+        private int readAsInteger(int offset, byte[] value)
+        {
+            return (int)readSignedVarLong(offset, value);
+        }
+
+
+
+        private long readSignedVarLong(int offset, byte[] value)
+        {
+            long raw = readUnsignedVarLong(offset, value);
+            // This undoes the trick in writeSignedVarLong()
+            long temp = (((raw << 63) >> 63) ^ raw) >> 1;
+            // This extra step lets us deal with the largest signed values by
+            // treating
+            // negative results from read unsigned methods as like unsigned values
+            // Must re-flip the top bit if the original read value had it set.
+            return temp ^ (raw & (1L << 63));
+        }
+
+        //protected String ReadAsString(int offset, byte[] value)
+        //{
+        //    int len = readAsInteger(offset, value);
+        //    String res = StringFromBytes(value, offset, len);
+
+        //    return res;
+        //}
+
+        //private string StringFromBytes(byte[] value, int offset, int len)
+        //{
+        //    return new Encoding.UTF8.GetString(value, offset, len);
+        //}
+
+        private long readUnsignedVarLong(int offset, byte[] value)
+        {
+            long returnValue = 0L;
+            int i = 0;
+            long b;
+            while ((b = value[offset++] & 0x80L) != 0)
+            {
+                returnValue |= (b & 0x7F) << i;
+                i += 7;
+                if (i > 63)
+                {
+                    throw new ArgumentException("Variable length quantity is too long must be <=63");
+                }
+            }
+            return returnValue | (b << i);
+        }
+
+
+        private int ReadClassName(byte[] data, int index)
+        {
+
+            var stream = new MemoryStream(data);
+            var reader = new BinaryReader(stream);
+
+            int startIndex = index;
+
+
+            byte[] ClassName = reader.ReadBytes(startIndex);
+            return index;
+
+        }
+
+        //private string FieldName(byte[] data, int index)
+        //{
+        //    Parameters:
+        //    //   buffer:
+        //    //     The buffer to read data into.
+        //    //
+        //    //   index:
+        //    //     The starting point in the buffer at which to begin reading into the buffer.
+        //    //
+        //    //   count:
+        //    //     The number of bytes to read.
+
+
+        //    var stream = new MemoryStream(data);
+        //    var reader = new BinaryReader(stream, Encoding.UTF7, true);
+
+        //    int i = index;
+
+        //    byte[] fieldName = reader.readAsInteger();
+
+
+
+        //}
 
         private int ParseFieldName(int index, string recordString, IDictionary<string, object> waterBucket)
         {
@@ -88,7 +232,7 @@ namespace OrientDB.Net.Serializers.RecordCSVSerializer
             }
 
             fieldName = fieldName.Replace("\"", "");
-           
+
             waterBucket.Add(fieldName, null);
 
             // move to position after colon (:)
@@ -633,12 +777,12 @@ namespace OrientDB.Net.Serializers.RecordCSVSerializer
             StringBuilder stringBuilder = new StringBuilder();
 
             PropertyInfo[] properties = input.GetType().GetProperties();
-            
-            if(properties.Any())
+
+            if (properties.Any())
             {
-                foreach(PropertyInfo propertyInfo in properties)
+                foreach (PropertyInfo propertyInfo in properties)
                 {
-                    switch(propertyInfo.Name)
+                    switch (propertyInfo.Name)
                     {
                         case "OClassName":
                             continue;
@@ -657,7 +801,7 @@ namespace OrientDB.Net.Serializers.RecordCSVSerializer
                                 stringBuilder.AppendFormat("{0}:{1}", propertyInfo.Name, SerializeValue(propertyInfo.GetValue(input), propertyInfo.PropertyType));
                             }
                             break;
-                    }                    
+                    }
                 }
             }
 
@@ -678,7 +822,7 @@ namespace OrientDB.Net.Serializers.RecordCSVSerializer
                 }
             }
 
-            switch(TypeExtensionMethods.GetTypeCode(valueType))
+            switch (TypeExtensionMethods.GetTypeCode(valueType))
             {
                 case TypeCode.Empty:
                     break;
