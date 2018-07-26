@@ -18,7 +18,6 @@ namespace OrientDB.Net.ConnectionProtocols.Binary.Core
         private readonly DatabaseHandshake _databaseHandshake;
         private readonly DatabaseConnectionOptions _connectionOptions;
         private OrientDBNetworkConnectionStream _connectionStream;
-        //private OpenServerResult _OpenServ;
         private OpenDatabaseResult _openResult; // might not be how I model this here in the end.
         private ICommandPayloadConstructorFactory _payloadFactory;
         private readonly ILogger _logger;
@@ -58,10 +57,8 @@ namespace OrientDB.Net.ConnectionProtocols.Binary.Core
             Open();
         }
 
-
         public void Open()
         {
-            //_connectionStream = new OrientDBNetworkConnectionStream(_connectionOptions, _logger);
             foreach(var stream in _connectionStream.StreamPool)
             {
                 _openResult = _connectionStream.Send(new DatabaseOpenOperation(_connectionOptions, _connectionStream.ConnectionMetaData));
