@@ -91,7 +91,7 @@ namespace OrientDB.Net.Serializers.NetworkBinary
 
         public byte[] Serialize<T>(T input) where T : OrientDBEntity
         {
-            return Encoding.UTF8.GetBytes($"{input.OClassName}@{SerializeEntity(input)}");
+            return Encoding.UTF8.GetBytes($"{input.OClassName}@{(input)}");
         }
 
 
