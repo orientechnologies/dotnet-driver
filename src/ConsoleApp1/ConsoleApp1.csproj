@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\OrientDB.Net.ConnectionProtocols.Binary.Tests\OrientDB.Net.ConnectionProtocols.Binary.Tests.csproj" />
+    <ProjectReference Include="..\OrientDB.Net.ConnectionProtocols.Binary\OrientDB.Net.ConnectionProtocols.Binary.csproj" />
+    <ProjectReference Include="..\OrientDB.Net.Core\OrientDB.Net.Core.csproj" />
+    <ProjectReference Include="..\OrientDB.Net.NetworkBinarySerializaer\OrientDB.Net.Serializers.NetworkBinary.csproj" />
+    <ProjectReference Include="..\OrientDB.Net.Serializers.RecordCSVSerializer\OrientDB.Net.Serializers.RecordCSVSerializer.csproj" />
+    <ProjectReference Include="..\OrientDB.Net.SqlCommandBuilder\OrientDB.Net.SqlCommandBuilder.csproj" />
+  </ItemGroup>
+
+</Project>

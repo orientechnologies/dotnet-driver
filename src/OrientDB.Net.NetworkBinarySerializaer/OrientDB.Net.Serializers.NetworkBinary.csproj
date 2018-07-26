@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\OrientDB.Net.ConnectionProtocols.Binary.Tests\OrientDB.Net.ConnectionProtocols.Binary.Tests.csproj" />
+    <ProjectReference Include="..\OrientDB.Net.ConnectionProtocols.Binary\OrientDB.Net.ConnectionProtocols.Binary.csproj" />
+    <ProjectReference Include="..\OrientDB.Net.Core\OrientDB.Net.Core.csproj" />
+    <ProjectReference Include="..\OrientDB.Net.SqlCommandBuilder\OrientDB.Net.SqlCommandBuilder.csproj" />
+  </ItemGroup>
+
+</Project>

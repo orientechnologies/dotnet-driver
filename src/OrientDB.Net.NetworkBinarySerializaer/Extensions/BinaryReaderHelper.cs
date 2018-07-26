@@ -124,14 +124,14 @@ namespace OrientDB.Net.Serializers.NetworkBinary.Extensions
 
 
 
-        public static OrientType getById(this BinaryReader binRdr)
-        {
-            int iId = binRdr.ReadByte();
+        //public static OrientType getById(this BinaryReader binRdr)
+        //{
+        //    int iId = binRdr.ReadByte();
 
-            if (iId >= 0 && iId < TYPES_BY_ID.length)
-                return TYPES_BY_ID[iId];
-            return null;
-        }
+        //    if (iId >= 0 && iId < TYPES_BY_ID.length)
+        //        return TYPES_BY_ID[iId];
+        //    return null;
+        //}
 
 
 
