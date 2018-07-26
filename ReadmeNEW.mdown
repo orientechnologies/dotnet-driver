@@ -1,0 +1,10 @@
+Interface IOrintServerConnection is used for creating connection with the server. 
+Sending initial bytes, establishing protocol version, opening databases etc.
+Connection starts with the OrientConnection factory(where configuration is created depending on parameters), because client can choose the serializer and connection protocol. 
+After connection configuration is created(server name, ip, port) it must be serilized(BinarySerilizer for primitive types only) and send 
+as BinaryStream to the server. Format of each request is standardized, each request have format of Request.cs class. Handshake, DB_OPEN, DB_EXIST is done in this way and each other request should be(it is not idealy for handshake to be done in this way, because it could not support reconect but for now is in this way).
+
+Commands start with ICommandPaylod interface, where each commands are preparing and serializing to further procesing 
+in same maneer as request does. Deserilization/Serilization is done in OrientDBNetworkBinary serializer. 
+Depending on OType(OrientType in C# code) document shopuld be deserialized by type name and value and stored in dictionary.
+ 
