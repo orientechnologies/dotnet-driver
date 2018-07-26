@@ -17,7 +17,6 @@ namespace OrientDB.Net.Serializers.NetworkBinary
 {
     public class OrientDBNetworkBinarySerializer : IOrientDBRecordSerializer<byte[]>
     {
-        //private static Encoding UTF8 { get; }
 
         public OrientDBRecordFormat RecordFormat
         {
@@ -32,63 +31,61 @@ namespace OrientDB.Net.Serializers.NetworkBinary
 
         }
 
-        //OVarIntSerializer VarInt = new OVarIntSerializer(); 
+        Object DeserializeValue(BinaryReader reader, OrientType type)
+        {
+            switch (type)
+            {
+                case OrientType.Integer:
+                    return BinaryReaderHelper.ReadAsInteger(reader);
+                    break;            
+                case OrientType.Long:
+                    return BinaryReaderHelper.ReadAsLong(reader);
+                    break;
+                case OrientType.Short:
+                    return BinaryReaderHelper.ReadAsShort(reader);
+                    break;
+                case OrientType.String:
+                    return BinaryReaderHelper.ReadString(reader);
+                    break;
+                case OrientType.Double:
+                    return BitConverter.Int64BitsToDouble(BinaryReaderHelper.ReadAsLong(reader));
+                    break;
+                case OrientType.Float:
+                    return BinaryReaderHelper.ReadFloat(reader);
+                    break;
+                case OrientType.Decimal:
+                    return BinaryReaderHelper.ReadDecimal(reader);
+                    break;
+                case OrientType.Byte:
+                    return reader.ReadByte();
+                    break;
+                case OrientType.EmbeddedList:
+                    break;
+            }
+            return null;
+        }
 
         public TResultType Deserialize<TResultType>(byte[] data) where TResultType : OrientDBEntity
         {
             TResultType entity = Activator.CreateInstance<TResultType>();
 
+            DictionaryOrientDBEntity document = new DictionaryOrientDBEntity();
+
             var stream = new MemoryStream(data);
             var reader = new BinaryReader(stream);
             
-            //BytesContainer bytesContainer = new BytesContainer();
-            //bytesContainer.bytes = data;
-            //bytesContainer.offset = 0;
-
-            int index = data.Length;
-            string recordString = "";
-            //var FieldNumber;
-            //byte[] FieldType;
-            
-            
-            entity.OClassName = BinaryReaderHelper.ReadString(reader);
+            document.OClassName = BinaryReaderHelper.ReadString(reader);
             var FieldNumber = BinaryReaderHelper.ReadSignedVarLong(reader);
-            var FieldName = BinaryReaderHelper.ReadString(reader);
-            //var Otype = BinaryReaderHelper.ReadString(reader);
-            var FieldType = reader.ReadByte();
-            var FieldValue = BinaryReaderHelper.ReadAsInteger(reader);
-        
+            for (int i = 0; i < FieldNumber; i++)
+            {
+                var FieldName = BinaryReaderHelper.ReadString(reader);
+                var FieldType = (OrientType)reader.ReadByte();
+                var FieldValue = DeserializeValue(reader, FieldType);
+                document.SetField(FieldName, FieldValue);
+            }
 
-            //FieldType = BinaryReaderHelper.ReadBytesRequired(reader);
+            return (TResultType)Convert.ChangeType(document, typeof(TResultType));
 
-            
-           
-            
-
-            //string ClasName = reader.();
-
-           // var fieldNumber = ReadClassName(data, Index);
-
-            return Deserialize<TResultType>(FieldName);
-
-
-
-
-            //byte[] ClassName;
-            //byte[] fieldNumber;
-
-            //for (int i = 0; i < 4; i++)
-            //{
-
-            //}
-
-            //return ;
-            //read class name : string
-            //read fieldNumber varint
-            //read field
-            //       -read field name : string 
-            //       -read field type : byte
-            //       -read field value : *
         }
 
         internal TResultType Deserialize<TResultType>(string recordString) where TResultType : OrientDBEntity

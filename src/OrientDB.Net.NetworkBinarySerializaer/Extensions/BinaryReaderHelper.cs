@@ -122,7 +122,31 @@ namespace OrientDB.Net.Serializers.NetworkBinary.Extensions
             return ReadSignedVarLong(reader);
         }
 
+        public static float ReadFloat(BinaryReader reader)
+        {
+            return BitConverter.ToSingle(reader.ReadBytesRequired(sizeof(Int32)).CheckEndianess(), 0);
+        }
+        
+        public static decimal ReadDecimal(BinaryReader reader)
+        {
+            var scale = reader.ReadInt32EndianAware();
+            var valueSize = reader.ReadInt32EndianAware();
+           // read Fine the value
+            var valuex = reader.ReadBytesRequired(valueSize);
 
+            Int64 x1 = 0;
+
+            if ((valuex[0] & 0x80) == 0x80)
+                x1 = (sbyte)valuex[0];
+            else
+                x1 = valuex[0];
+
+            for (int i = 1; i < valuex.Length; i++)
+            {
+                x1 = (x1 << 8) | valuex[i];
+            }
+            return new Decimal(x1 * Math.Pow(10, (-1) * scale));
+        }
 
         //public static OrientType getById(this BinaryReader binRdr)
         //{
