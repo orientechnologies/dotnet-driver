@@ -28,10 +28,9 @@ namespace Operations
         public Request CreateRequest(int sessionId, byte[] token)
         {
             Request request = new Request(OperationMode.Synchronous, sessionId);
-
+            ///standard request fields, token is mandatory from version 37
             request.AddDataItem((byte)OperationType.DB_EXIST);
             request.AddDataItem(request.SessionId);
-
             request.AddDataItem((byte[])token);
 
 
@@ -39,17 +38,18 @@ namespace Operations
             {
                 request.AddDataItem(_database);
                 request.AddDataItem(_storageType.ToString().ToLower());
+            }
+
+            //starting from version 37 token session is mandatory
+            if (DriverConstants.ProtocolVersion > 26 && _metaData.UseTokenBasedSession)
+            {
 
             }
 
-            //if (DriverConstants.ProtocolVersion > 26 && _metaData.UseTokenBasedSession)
-            //{
-
-            //}
-
-
-            //if (_metaData.ProtocolVersion >= 16) //since 1.5 snapshot but not in 1.5
-            //    request.AddDataItem(_storageType.ToString().ToLower());
+            //since 1.5 snapshot but not in 1.5
+            //since version 37 not in use
+            if (_metaData.ProtocolVersion >= 16 && _metaData.ProtocolVersion <= 36) 
+                request.AddDataItem(_storageType.ToString().ToLower());
 
             return request;
         }

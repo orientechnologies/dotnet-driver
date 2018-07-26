@@ -71,39 +71,16 @@ namespace OrientDB.Net.ConnectionProtocols.Binary.Core
         }
 
         private BinaryReader GetResponseReader(NetworkStream stream)
-        {
-            
+        {           
             var reader = new BinaryReader(stream);
-
-            //var sta = reader.ReadBytes(5);
             var status = (ResponseStatus)reader.ReadByte();
             var sessionId = reader.ReadInt32EndianAware();
 
             if (status == ResponseStatus.ERROR)
             {
-                var size = reader.ReadInt32EndianAware();
-                var fg = reader.ReadBytes(size);
-
-                var requestName = reader.ReadByte();
-                var var3 = reader.ReadInt32EndianAware();
-                var var4 = reader.ReadInt32EndianAware();
-                var var6 = reader.ReadByte();
-
-                size = reader.ReadInt32EndianAware();
-                var jer = reader.ReadChars(size);
-
-                size = reader.ReadInt32EndianAware();
-                var except = reader.ReadChars(size);
-
-               // var read = reader.ReadByte();
-
-
+                //TODO implement error response
                 string exceptionString = "";
-
                 byte followByte = reader.ReadByte();
-
-                size = reader.ReadInt32EndianAware();
-                var except2 = reader.ReadChars(size);
 
                 while (followByte == 1)
                 {

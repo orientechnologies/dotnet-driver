@@ -19,14 +19,13 @@ namespace OrientDB.Net.ConnectionProtocols.Binary.Operations
             this._connectionMetaData = connectionMetaData;
         }
 
-
         public Request CreateRequest(int sessionId, byte[] token)
         {
             Request request = new Request(OperationMode.Asynchronous);
 
-            // standard request fields
+            //from version 37 handshake is required
+            //TODO HANDSHAKE should support reconnect and connection drop
             request.AddDataItem((byte)OperationType.HANDSHAKE);
-            //request.AddDataItem(request.SessionId);
 
             // operation specific fields
             if (DriverConstants.ProtocolVersion > 36)
@@ -41,6 +40,7 @@ namespace OrientDB.Net.ConnectionProtocols.Binary.Operations
             return request;
         }
 
+        //Not best solution because handshake should not return any response
         public DatabaseHandshakeResult Execute(BinaryReader reader)
         {
             return new DatabaseHandshakeResult(true);

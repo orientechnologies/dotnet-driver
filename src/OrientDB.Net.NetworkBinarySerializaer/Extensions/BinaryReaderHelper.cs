@@ -148,21 +148,6 @@ namespace OrientDB.Net.Serializers.NetworkBinary.Extensions
             return new Decimal(x1 * Math.Pow(10, (-1) * scale));
         }
 
-        //public static OrientType getById(this BinaryReader binRdr)
-        //{
-        //    int iId = binRdr.ReadByte();
-
-        //    if (iId >= 0 && iId < TYPES_BY_ID.length)
-        //        return TYPES_BY_ID[iId];
-        //    return null;
-        //}
-
-
-
-
-
-
-
     }
 }
 

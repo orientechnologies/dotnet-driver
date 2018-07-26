@@ -54,7 +54,7 @@ namespace OrientDB.Net.ConnectionProtocols.Binary.Core
                 _logger.LogDebug("Opening connections");
                 foreach (var stream in _connectionStream.StreamPool)
                 {
-                    var _openResult = _connectionStream.Send(new DatabaseHandshake(_options, _connectionStream.ConnectionMetaData));
+                    var _openResult = _connectionStream.Send(new DatabaseHandshake(_options, _connectionStream.ConnectionMetaData));//Sending handshake here, only for testing purpose
 
                 }
             }

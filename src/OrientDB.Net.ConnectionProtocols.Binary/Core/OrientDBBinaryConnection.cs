@@ -15,7 +15,6 @@ namespace OrientDB.Net.ConnectionProtocols.Binary.Core
     public class OrientDBBinaryConnection : IOrientDatabaseConnection, IDisposable
     {
         private readonly IOrientDBRecordSerializer<byte[]> _serializer;
-        private readonly DatabaseHandshake _databaseHandshake;
         private readonly DatabaseConnectionOptions _connectionOptions;
         private OrientDBNetworkConnectionStream _connectionStream;
         private OpenDatabaseResult _openResult; // might not be how I model this here in the end.

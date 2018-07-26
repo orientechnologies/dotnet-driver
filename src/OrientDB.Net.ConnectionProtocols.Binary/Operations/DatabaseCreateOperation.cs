@@ -65,7 +65,7 @@ namespace OrientDB.Net.ConnectionProtocols.Binary.Operations
                 Password = _options.Password,
                 PoolSize = _options.PoolSize,
                 Port = _options.Port,
-                //Type = _databaseType,
+                Type = _databaseType,
                 UserName = _options.UserName
             }, _serializer, _logger, _connectionStream);
         }

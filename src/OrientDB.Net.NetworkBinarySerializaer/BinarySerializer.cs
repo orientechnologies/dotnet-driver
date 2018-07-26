@@ -56,14 +56,7 @@ namespace OrientDB.Net.Serializers.NetworkBinary
         {
             return Encoding.UTF8.GetString(data, 0, data.Length);
         }
-
-        //internal static string ReadString(byte[] data)
-        //{
-        //    int len = 
-
-        //}
-
-        
+    
 
         internal static byte[] ToArray(byte data)
         {

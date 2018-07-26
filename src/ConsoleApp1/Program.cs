@@ -36,7 +36,7 @@ namespace ConsoleApp1
 
             var transaction = database.CreateTransaction();
             var Person = new Person { Age = 33, FirstName = "Jane", LastName = "Doe", FavoriteColors = new[] { "black", "blue" } };
-            //transaction.Remove(Person);
+            transaction.Remove(Person);
             transaction.AddEntity(new Person { Age = 5, FirstName = "John", LastName = "Doe", FavoriteColors = new[] { "red", "blue" } });
             transaction.Commit();
             transaction = database.CreateTransaction();

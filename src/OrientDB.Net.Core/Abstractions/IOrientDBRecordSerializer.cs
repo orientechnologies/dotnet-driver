@@ -6,7 +6,7 @@ namespace OrientDB.Net.Core.Abstractions
     {
         OrientDBRecordFormat RecordFormat { get; }
 
-        TResultType Deserialize<TResultType>(TDataType ByteContainer) where TResultType : OrientDBEntity;
+        TResultType Deserialize<TResultType>(TDataType data) where TResultType : OrientDBEntity;
 
         TDataType Serialize<T>(T input) where T : OrientDBEntity;
     }

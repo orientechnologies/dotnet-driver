@@ -29,14 +29,11 @@ namespace OrientDB.Net.ConnectionProtocols.Binary.Operations
             request.AddDataItem(token);
             // operation specific fields
 
-
-            //if (DriverConstants.ProtocolVersion > 26)
-            //{
-
-            //    request.AddDataItem((byte)(_metaData.UseTokenBasedSession ? 0 : 1));
-            //    //use token evrytime
-            //}
-
+            //from version 37 token is required
+            if (DriverConstants.ProtocolVersion > 26 && _metaData.ProtocolVersion <=36)
+            {
+                request.AddDataItem((byte)(_metaData.UseTokenBasedSession ? 0 : 1));              
+            }
 
             request.AddDataItem(_options.Database);
             request.AddDataItem(_options.UserName);
@@ -47,13 +44,11 @@ namespace OrientDB.Net.ConnectionProtocols.Binary.Operations
 
         public OpenDatabaseResult Execute(BinaryReader reader)
         {
-
             byte[] token = null;
-            var by = reader.ReadBytes(4);
+            var by = reader.ReadBytes(4);//
             var RequestType = reader.ReadByte();
             var sessionId = reader.ReadInt32EndianAware();
             
-
             if (_metaData.ProtocolVersion > 26)
             {
                 var size = reader.ReadInt32EndianAware();
