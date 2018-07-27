@@ -14,8 +14,6 @@ namespace ConsoleApp1
         static void Main(string[] args)
         {
             IEnumerable<Person> persons = new List<Person>();
-
-            Stopwatch swOrient = new Stopwatch();
             IOrientServerConnection server = new OrientDBConfiguration()
                .ConnectWith<byte[]>()
                .Connect(new BinaryProtocol("localhost", "root", "000"))

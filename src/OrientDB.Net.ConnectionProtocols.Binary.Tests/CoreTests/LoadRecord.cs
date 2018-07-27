@@ -1,15 +1,7 @@
-﻿//using System;
-//using System.Collections.Generic;
-//using System.Text;
-
-//namespace OrientDB.Net.ConnectionProtocols.Binary.Tests.CoreTests
-//{
-//    class LoadRecord
-//    {
-//    }
-//}
+﻿
 
 //using NUnit.Framework;
+//using OrientDB.Net.Core.Models;
 
 //[TestFixture]
 //public class LoadRecordTests
@@ -22,13 +14,16 @@
 //        {
 //            using (var database = new ODatabase(TestConnection.ConnectionOptions))
 //            {
-//                // prerequisites
+//                prerequisites
 //                database
 //                    .Create.Class("TestClass")
 //                    .Run();
 
-//                ORID document = new ODocument()
-//                    .SetField("foo", "foo string value")
+//                ORID document = new DictionaryOrientDBEntity()
+//                    .SetField<T>("dd",);
+                    
+//                    .SetField("foo", "foo string value");
+                    
 //                    .SetField("bar", 12345);
 
 //                ODocument insertedDocument = database
@@ -64,7 +59,7 @@
 //        {
 //            using (var database = new ODatabase(TestConnection.ConnectionOptions))
 //            {
-//                // prerequisites
+//                prerequisites
 //                database
 //                    .Create.Class("TestClass")
 //                    .Run();
@@ -93,7 +88,7 @@
 //        {
 //            using (var database = new ODatabase(TestConnection.ConnectionOptions))
 //            {
-//                // prerequisites
+//                prerequisites
 //                database
 //                    .Create.Class("TestClass")
 //                    .Run();

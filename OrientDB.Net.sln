@@ -13,9 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrientDB.Net.Serializers.Re
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrientDB.Net.SqlCommandBuilder", "src\OrientDB.Net.SqlCommandBuilder\OrientDB.Net.SqlCommandBuilder.csproj", "{EFEDCA4B-1678-4CF8-A03D-4E56B617D3F4}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestApplication", "src\ConsoleApp1\TestApplication.csproj", "{4C0B3309-62FF-462E-851A-BADAD0727942}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrientDB.Net.Serializers.NetworkBinary", "src\OrientDB.Net.NetworkBinarySerializer\OrientDB.Net.Serializers.NetworkBinary.csproj", "{B5159C8C-CB76-41D5-AF68-438F53057FBF}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestApplication", "src\TestApplication\TestApplication.csproj", "{BE67E96F-4A5D-4293-9E27-20A8A97E9E1D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -43,14 +43,14 @@ Global
 		{EFEDCA4B-1678-4CF8-A03D-4E56B617D3F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EFEDCA4B-1678-4CF8-A03D-4E56B617D3F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EFEDCA4B-1678-4CF8-A03D-4E56B617D3F4}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4C0B3309-62FF-462E-851A-BADAD0727942}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4C0B3309-62FF-462E-851A-BADAD0727942}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4C0B3309-62FF-462E-851A-BADAD0727942}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4C0B3309-62FF-462E-851A-BADAD0727942}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B5159C8C-CB76-41D5-AF68-438F53057FBF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B5159C8C-CB76-41D5-AF68-438F53057FBF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B5159C8C-CB76-41D5-AF68-438F53057FBF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B5159C8C-CB76-41D5-AF68-438F53057FBF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BE67E96F-4A5D-4293-9E27-20A8A97E9E1D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE67E96F-4A5D-4293-9E27-20A8A97E9E1D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE67E96F-4A5D-4293-9E27-20A8A97E9E1D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE67E96F-4A5D-4293-9E27-20A8A97E9E1D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

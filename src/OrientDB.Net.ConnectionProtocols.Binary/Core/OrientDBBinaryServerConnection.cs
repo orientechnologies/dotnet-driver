@@ -16,7 +16,7 @@ namespace OrientDB.Net.ConnectionProtocols.Binary.Core
         private OrientDBNetworkConnectionStream _connectionStream;
         private bool _databaseHanshakeResult;
         private readonly ILogger _logger;
-        private readonly DatabaseHandshakeResult databaseHandshakeResult;
+        //private readonly DatabaseHandshakeResult databaseHandshakeResult;
 
 
         public OrientDBBinaryServerConnection(ServerConnectionOptions options, IOrientDBRecordSerializer<byte[]> serializer, ILogger logger)
