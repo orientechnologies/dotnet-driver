@@ -17,7 +17,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrientDB.Net.Serializers.Ne
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestApplication", "src\TestApplication\TestApplication.csproj", "{BE67E96F-4A5D-4293-9E27-20A8A97E9E1D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrientDB.Net.Serializers.Network.Binary.Tests", "OrientDB.Net.Serializers.Network.Binary.Tests\OrientDB.Net.Serializers.Network.Binary.Tests.csproj", "{1FD3A8BC-0EF6-4687-92C9-898C5AE987CB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrientDB.Net.Serializers.Network.Binary.Tests", "src\OrientDB.Net.Serializers.Network.Binary.Tests\OrientDB.Net.Serializers.Network.Binary.Tests.csproj", "{17F09CB7-4CA0-4942-BB69-6EC621132175}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -53,10 +53,10 @@ Global
 		{BE67E96F-4A5D-4293-9E27-20A8A97E9E1D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BE67E96F-4A5D-4293-9E27-20A8A97E9E1D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BE67E96F-4A5D-4293-9E27-20A8A97E9E1D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1FD3A8BC-0EF6-4687-92C9-898C5AE987CB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1FD3A8BC-0EF6-4687-92C9-898C5AE987CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1FD3A8BC-0EF6-4687-92C9-898C5AE987CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1FD3A8BC-0EF6-4687-92C9-898C5AE987CB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{17F09CB7-4CA0-4942-BB69-6EC621132175}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{17F09CB7-4CA0-4942-BB69-6EC621132175}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{17F09CB7-4CA0-4942-BB69-6EC621132175}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{17F09CB7-4CA0-4942-BB69-6EC621132175}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
