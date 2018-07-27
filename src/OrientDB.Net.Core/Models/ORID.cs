@@ -51,8 +51,8 @@ namespace OrientDB.Net.Core.Models
 
         public ORID()
         {
-            ClusterId = -20;
-            ClusterPosition = -20;
+            ClusterId = -1;
+            ClusterPosition = -1;
         }
 
         public ORID(ORID other)

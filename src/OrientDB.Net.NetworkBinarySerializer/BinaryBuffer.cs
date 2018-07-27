@@ -86,7 +86,6 @@ namespace OrientDB.Net.Serializers.NetworkBinary
         private long readUnsignedVarLong(int offset, byte[] value)
         {
             long returnValue = 0L;
-            //this[offset] = value;
             int i = 0;
             long b;
             while ((b = value[offset++] & 0x80L) != 0)

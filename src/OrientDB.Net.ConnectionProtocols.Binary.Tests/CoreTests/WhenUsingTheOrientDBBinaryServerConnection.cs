@@ -24,7 +24,10 @@ namespace OrientDB.Net.ConnectionProtocols.Binary.Tests.CoreTests
         {
             var options = new DatabaseConnectionOptions
             {
-
+                HostName = "localhost",
+                Password = "000",
+                Port = 2424,
+                UserName = "root",
             };
 
             Assert.Throws(typeof(ArgumentNullException), () => new OrientDBBinaryServerConnection(options, null, null));
@@ -35,7 +38,11 @@ namespace OrientDB.Net.ConnectionProtocols.Binary.Tests.CoreTests
         {
             var options = new DatabaseConnectionOptions
             {
-               
+                HostName = "localhost",
+                Password = "000",
+                Port = 2424,
+                UserName = "root",
+
             };
             Mock<IOrientDBRecordSerializer<byte[]>> mockSerializer = new Mock<IOrientDBRecordSerializer<byte[]>>();
             Mock<ILogger> mockLogger = new Mock<ILogger>();
@@ -50,7 +57,11 @@ namespace OrientDB.Net.ConnectionProtocols.Binary.Tests.CoreTests
         {
             var options = new DatabaseConnectionOptions
             {
-
+                HostName = "localhost",
+                Password = "000",
+                Port = 2424,
+                UserName = "root",
+                
             };
             Mock<IOrientDBRecordSerializer<byte[]>> mockSerializer = new Mock<IOrientDBRecordSerializer<byte[]>>();
             Mock<ILogger> mockLogger = new Mock<ILogger>();
@@ -65,6 +76,10 @@ namespace OrientDB.Net.ConnectionProtocols.Binary.Tests.CoreTests
         {
             var options = new DatabaseConnectionOptions
             {
+                HostName = "localhost",
+                Password = "000",
+                Port = 2424,
+                UserName = "root",
 
             };
             Mock<IOrientDBRecordSerializer<byte[]>> mockSerializer = new Mock<IOrientDBRecordSerializer<byte[]>>();

@@ -39,4 +39,8 @@
     <PackageReference Include="System.Reflection.TypeExtensions" Version="4.3.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Serilizer\" />
+  </ItemGroup>
+
 </Project>
