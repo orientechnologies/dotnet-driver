@@ -61,7 +61,7 @@ namespace OrientDB.Net.ConnectionProtocols.Binary.Tests.CoreTests
                 Password = "000",
                 Port = 2424,
                 UserName = "root",
-                
+
             };
             Mock<IOrientDBRecordSerializer<byte[]>> mockSerializer = new Mock<IOrientDBRecordSerializer<byte[]>>();
             Mock<ILogger> mockLogger = new Mock<ILogger>();

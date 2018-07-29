@@ -9,6 +9,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyCompany("Orient ltd")]
 [assembly: AssemblyProduct("OrientDB.Net.SqlCommandBuilder")]
 [assembly: AssemblyTrademark("")]
+[assembly: InternalsVisibleTo("OrientDB.Net.Serializers.Network.Binary.Tests")]
 
 // Setting ComVisible to false makes the types in this assembly not visible
 // to COM components.  If you need to access a type in this assembly from

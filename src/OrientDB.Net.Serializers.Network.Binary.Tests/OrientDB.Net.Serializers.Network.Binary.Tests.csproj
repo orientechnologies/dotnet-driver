@@ -5,11 +5,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="NUnit" Version="3.10.1" />
     <PackageReference Include="NUnit3TestAdapter" Version="3.10.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="../OrientDB.Net.NetworkBinarySerializer\OrientDB.Net.Serializers.NetworkBinary.csproj" />
+    <ProjectReference Include="..\OrientDB.Net.ConnectionProtocols.Binary\OrientDB.Net.ConnectionProtocols.Binary.csproj" />
+    <ProjectReference Include="..\OrientDB.Net.Core\OrientDB.Net.Core.csproj" />
   </ItemGroup>
 
 </Project>

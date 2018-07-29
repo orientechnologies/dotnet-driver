@@ -41,5 +41,6 @@ namespace OrientDB.Net.ConnectionProtocols.Binary.Tests.CoreTests
         {
             Assert.Throws(typeof(ArgumentException), () => new OrientDBBinaryConnection("localhost", "root", null, null, null));
         }
+
     }
 }

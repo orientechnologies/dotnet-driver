@@ -11,4 +11,10 @@
     <ProjectReference Include="..\OrientDB.Net.SqlCommandBuilder\OrientDB.Net.SqlCommandBuilder.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Reference Include="System">
+      <HintPath>System</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>

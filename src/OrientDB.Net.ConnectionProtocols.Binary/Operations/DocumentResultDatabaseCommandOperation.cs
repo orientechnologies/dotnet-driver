@@ -125,7 +125,6 @@ namespace OrientDB.Net.ConnectionProtocols.Binary.Operations
                     }
                 }
             }
-            //var kss = reader.ReadBytes(1);
 
             return new DocumentResult(documents);
         }
